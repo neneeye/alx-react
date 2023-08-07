@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class BodySection extends Component {
-  render() {
+  render () {
     return (
       <div className='bodySection'>
         <h2>{this.props.title}</h2>
@@ -12,8 +12,8 @@ class BodySection extends Component {
   }
 }
 
-BodySection. defaultProps = {
-	children: <React.Fragment />
+BodySection.defaultProps = {
+  children: <> </>
 };
 
 BodySection.propTypes = {

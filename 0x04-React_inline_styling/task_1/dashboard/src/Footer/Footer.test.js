@@ -1,21 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
 import Footer from './Footer';
-import { StyleSheetTestUtils } from 'aphrodite';
 
-describe("Testing <Footer /> component", () => {
-  let wrapper;
+describe('<Login /> component tests', () => {
+  const wrapper = shallow(<Footer />);
 
-  beforeEach(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
-    wrapper = shallow(<Footer />);
+  it('renders without crashing', () => {
+    expect(wrapper).toBeDefined();
   });
 
-  it("Footer Component renders without crashing", () => {
-    expect(wrapper.exists());
-  });
-
-  it("Footer compoenent render at the very least the text “Copyright”", () => {
-    expect(wrapper.find("Copyright").at(0)).toBeDefined();
+  it('render the text “Copyright”', () => {
+    expect(wrapper.text()).toContain('Copyright');
   });
 });

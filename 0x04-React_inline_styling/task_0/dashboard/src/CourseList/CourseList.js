@@ -1,38 +1,61 @@
-import React from 'react';
-import PropType from 'prop-types';
-import CourseShape from './CourseShape';
+import PropTypes from 'prop-types';
+
 import CourseListRow from './CourseListRow';
 import './CourseList.css';
 
-function CourseList({ listCourses }) {
+function CourseList ({ listCourses }) {
+  const isHeader = true;
+
+  const courses = listCourses.map(course =>
+    <CourseListRow
+      key={course.id}
+      textFirstCell={course.name}
+      textSecondCell={course.credit}
+    />
+  );
+
   return (
-    <table id="CourseList" cellPadding="0" cellSpacing="0">
+    <table id='CourseList'>
       <thead>
-        <CourseListRow isHeader={true} textFirstCell='Available courses' />
-        <CourseListRow isHeader={true} textFirstCell='Course name' textSecondCell="Credit" />
+        <CourseListRow
+          textFirstCell='Available courses'
+          isHeader={isHeader}
+        />
+        <CourseListRow
+          textFirstCell='Course name'
+          textSecondCell='Credit'
+          isHeader={isHeader}
+        />
       </thead>
       <tbody>
-        {
-        listCourses.length == 0 ?
-          <CourseListRow isHeader={false} textFirstCell='No course available yet'/>
-        : null
-        }
-        {
-          listCourses.map((val, idx) => {
-            return <CourseListRow isHeader={false} textFirstCell={val.name} textSecondCell={val.credit} key={val.id}/>
-          })
-        }
+        {/* <CourseListRow
+          textFirstCell='ES6'
+          textSecondCell='60'
+        />
+        <CourseListRow
+          textFirstCell='Webpack'
+          textSecondCell='20'
+        />
+        <CourseListRow
+          textFirstCell='React'
+          textSecondCell='40'
+        /> */}
+        {listCourses.length > 0
+          ? courses
+          : <tr>No course available yet</tr>}
       </tbody>
     </table>
   );
 }
 
-CourseList.defaultProps = {
-  listCourses: []
+// Assign Proptypes
+CourseList.propTypes = {
+  listCourses: PropTypes.array
 };
 
-CourseList.propType = {
-  listCourses: PropType.arrayOf(CourseShape)
+// Set Default PropTypes
+CourseList.defaultProps = {
+  listCourses: []
 };
 
 export default CourseList;

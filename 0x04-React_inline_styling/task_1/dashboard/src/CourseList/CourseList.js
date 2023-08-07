@@ -1,49 +1,57 @@
-import React from 'react';
-import PropType from 'prop-types';
-import CourseShape from './CourseShape';
+import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 import CourseListRow from './CourseListRow';
 import './CourseList.css';
-import {  StyleSheet, css } from 'aphrodite';
 
-function CourseList({ listCourses }) {
+function CourseList ({ listCourses }) {
+  const isHeader = true;
+
+  const courses = listCourses.map(course =>
+    <CourseListRow
+      key={course.id}
+      textFirstCell={course.name}
+      textSecondCell={course.credit}
+    />
+  );
+
   return (
-    <table id="CourseList" cellPadding="0" cellSpacing="0" className={css(courseListStyles.table)}>
+    <table id='CourseList' className={css(styles.CourseList)}>
       <thead>
-        <CourseListRow isHeader={true} textFirstCell='Available courses' />
-        <CourseListRow isHeader={true} textFirstCell='Course name' textSecondCell="Credit" />
+        <CourseListRow
+          textFirstCell='Available courses'
+          isHeader={isHeader}
+        />
+        <CourseListRow
+          textFirstCell='Course name'
+          textSecondCell='Credit'
+          isHeader={isHeader}
+        />
       </thead>
       <tbody>
-        {
-        listCourses.length == 0 ?
-          <CourseListRow isHeader={false} textFirstCell='No course available yet'/>
-        : null
-        }
-        {
-          listCourses.map((val, idx) => {
-            return <CourseListRow isHeader={false} textFirstCell={val.name} textSecondCell={val.credit} key={val.id}/>
-          })
-        }
+        {listCourses.length > 0
+          ? courses
+          : <tr>No course available yet</tr>}
       </tbody>
     </table>
   );
 }
 
-const courseListStyles = StyleSheet.create({
-	table: {
-		display: 'table',
-		border: '1px solid',
-		borderCollapse: 'collapse',
-		margin: '2rem auto 0 auto',
-		width: '90%',
-	}
-});
+// Assign Proptypes
+CourseList.propTypes = {
+  listCourses: PropTypes.array
+};
 
+// Set Default PropTypes
 CourseList.defaultProps = {
   listCourses: []
 };
 
-CourseList.propType = {
-  listCourses: PropType.arrayOf(CourseShape)
-};
+// Styles
+const styles = StyleSheet.create({
+  CourseList: {
+    width: '100%',
+    border: '1px solid gray'
+  }
+});
 
 export default CourseList;
